@@ -21,6 +21,9 @@ proc ReadFile(Handle_t fileHandle; *ByteArray_t pByteArray) bool:
     if not GetByteCount(fileHandle, &byteCount) then
         return false;
     fi;
+    if byteCount = 0 then
+        return false;
+    fi;
     pBytes := Malloc(byteCount);
     if pBytes = nil then
         return false;
@@ -29,8 +32,8 @@ proc ReadFile(Handle_t fileHandle; *ByteArray_t pByteArray) bool:
         Mfree(pBytes, byteCount);
         return false;
     fi;
-    pByteArray*.ba_pBytes := pBytes;
-    pByteArray*.ba_byteCount := byteCount;
+    pByteArray*.ba_pFirstByte := pBytes;
+    pByteArray*.ba_pLastByte := pBytes + byteCount - 1;
     true
 corp;
 
@@ -44,4 +47,9 @@ proc LoadFile(*char pPath; *ByteArray_t pByteArray) bool:
     result := ReadFile(fileHandle, pByteArray);
     Close(fileHandle);
     result
+corp;
+
+proc FreeByteArray(*ByteArray_t pByteArray) void:
+    Mfree(pByteArray*.ba_pFirstByte,
+          pByteArray*.ba_pLastByte - pByteArray*.ba_pFirstByte + 1);
 corp;

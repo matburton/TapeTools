@@ -21,5 +21,5 @@ proc Start() void:
         /* writeln("Cycles ", cycleCount); */
     od;
     /* Enable(); */
-    Mfree(fileBytes.ba_pBytes, fileBytes.ba_byteCount);
+    FreeByteArray(&fileBytes);
 corp;
