@@ -24,7 +24,8 @@ proc main() void:
         if pDosLibrary ~= nil then
             _d_IO_initialize();
             MerrorSet(true);
-            Start();
+            /* Start(); */
+            SpeedTest();
             CloseDosLibrary();
         fi;
         if pWBStartup ~= nil then           

@@ -20,6 +20,7 @@ namespace TapeTools.TapConvert.Amiga.Serialisation
                                              .Aggregate((c, a) => c + a);
 
             Console.WriteLine($"Total colour cycles:  {totalCycles:n0}");
+            Console.WriteLine($"Min colour cycles:    {colourCycleGaps.Min():n0}");
 
             var cyclesToIndex = colourCycleGaps
                 .GroupBy(c => c)
