@@ -4,7 +4,8 @@
 #Draco/drinc/libraries/dos.g
 #Draco/drinc/libraries/dosextens.g
 #Draco/drinc/workbench/startup.g
-#Includes/Program.g
+#Draco/drinc/util.g
+#Includes/Modulating.g
 
 extern _d_IO_initialize() void;
 
@@ -22,6 +23,7 @@ proc main() void:
         pDosLibrary := OpenDosLibrary(0);
         if pDosLibrary ~= nil then
             _d_IO_initialize();
+            MerrorSet(true);
             Start();
             CloseDosLibrary();
         fi;

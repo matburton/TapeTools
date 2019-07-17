@@ -1,0 +1,14 @@
+Draco/drlib/drstart0.o
+t:TapModulate/Main.r
+t:TapModulate/Modulating.r
+t:TapModulate/File.r
+t:TapModulate/Parsing.r
+t:TapModulate/Timing.r
+
+lib
+Draco/drlib/exec.lib
+Draco/drlib/dos.lib
+Draco/drlib/drio.lib
+Draco/drlib/draco.lib
+
+to ram:TapModulate smallcode
