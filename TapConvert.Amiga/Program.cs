@@ -15,14 +15,17 @@ namespace TapeTools.TapConvert.Amiga
             {
                 if (arguments.Length < 1)
                 {
-                    Console.WriteLine("\nArguments are '.tap' file paths");
-                    Console.WriteLine("'.amiga.bin' files will be written to"
+                    Console.WriteLine("\nArguments are folders with '.tap' files.");
+                    Console.WriteLine(" '.amiga.bin' files will be written to"
                                       + " current directory with same file names");
                 }
 
                 VerifyAssumptions();
 
-                foreach (var tapFilePath in arguments)
+                var tapFilePaths = arguments.SelectMany
+                    (a => Directory.GetFiles(a, "*.tap"));
+
+                foreach (var tapFilePath in tapFilePaths)
                 {
                     ConvertTapForAmiga(tapFilePath);
                 }
