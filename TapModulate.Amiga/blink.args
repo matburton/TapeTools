@@ -3,7 +3,7 @@ t:TapModulate/Main.r
 t:TapModulate/Modulating.r
 t:TapModulate/File.r
 t:TapModulate/Parsing.r
-t:TapModulate/Timing.r
+t:TapModulate/Timing.o
 
 lib
 Draco/drlib/exec.lib

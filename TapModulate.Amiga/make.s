@@ -2,11 +2,15 @@ IF EXISTS t:TapModulate
     delete >NIL: t:TapModulate all
 ENDIF
 makedir t:TapModulate 
-copy >NIL: Source/#?.d t:TapModulate all
+copy >NIL: Source/#? t:TapModulate all
+echo ""
+echo "*E[33mAssembling...*E[0m"
+echo ""
+A68k t:TapModulate/Timing.a
 echo ""
 echo "*E[33mCompiling...*E[0m"
 echo ""
-Draco/c/Draco t:TapModulate/Main.d t:TapModulate/Modulating.d t:TapModulate/File.d t:TapModulate/Parsing.d t:TapModulate/Timing.d
+Draco/c/Draco t:TapModulate/Main.d t:TapModulate/Modulating.d t:TapModulate/File.d t:TapModulate/Parsing.d
 echo ""
 echo "*E[33mLinking...*E[0m"
 echo ""

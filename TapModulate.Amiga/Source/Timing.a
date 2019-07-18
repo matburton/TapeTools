@@ -1,0 +1,20 @@
+
+        xdef    WaitForEndOfPreviousCycles
+        
+missed: clr.l   d0
+        rts
+        
+spinPollForInterrupt macro
+        btst.b  #0,($BFED01)
+        beq     missed
+\@poll: btst.b  #0,($BFED01)
+        bne     \@poll
+        endm
+        
+WaitForEndOfPreviousCycles
+        spinPollForInterrupt
+        spinPollForInterrupt
+        clr.l   d0
+        rts
+        
+        end
