@@ -1,8 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <OutputPath>obj/intermediate</OutputPath>
+    <PublishDir>bin</PublishDir>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishSingleFile>true</PublishSingleFile>
+    <RunCommand>$(MSBuildProjectDirectory)\$(PublishDir)\$(AssemblyName).exe</RunCommand>
   </PropertyGroup>
-
+  <Target Name="BinPublish" DependsOnTargets="Publish" AfterTargets="Build" />
 </Project>
