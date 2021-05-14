@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.IO;
 using System.Linq;
@@ -47,7 +47,7 @@ namespace TapeTools.TapConvert.Amiga
 
             var tapFileBytes = File.ReadAllBytes(tapFilePath);
 
-            var pulseGaps = new TapSerialiser().ToPulseGaps(tapFileBytes);
+            var pulseGaps = new WaveSerialiser().ToPulseGaps(tapFileBytes);
 
             var amigaFileBytes = new AmigaSerialiser().ToBytes(pulseGaps);
 

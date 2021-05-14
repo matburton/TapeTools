@@ -15,7 +15,7 @@ namespace TapeTools.TapConvert.Amiga.Serialisation
                 throw new ArgumentNullException(nameof(tapFileBytes));
             }
 
-            VerifyCompatability(tapFileBytes);
+            VerifyCompatibility(tapFileBytes);
 
             var gapsInCycles = GetPulseGapsInCycles(tapFileBytes).ToArray();
 
@@ -28,15 +28,13 @@ namespace TapeTools.TapConvert.Amiga.Serialisation
         }
 
         private static IEnumerable<uint> GetPulseGapsInCycles
-            (byte[] payloadBytes)
+            (IReadOnlyList<byte> payloadBytes)
         {
-            var enumerator = payloadBytes.GetEnumerator();
-
-            for (var index = 20; index < payloadBytes.Length; ++index)
+            for (var index = 20; index < payloadBytes.Count; ++index)
             {
                 if (payloadBytes[index] == 0)
                 {
-                    if (index + 3 >= payloadBytes.Length)
+                    if (index + 3 >= payloadBytes.Count)
                     {
                         throw new Exception("Byte sequence ended early");
                     }
@@ -61,7 +59,7 @@ namespace TapeTools.TapConvert.Amiga.Serialisation
             return TimeSpan.FromTicks(Convert.ToInt64(ticks));
         }
 
-        private static int VerifyCompatability(byte[] tapFileBytes)
+        private static void VerifyCompatibility(byte[] tapFileBytes)
         {
             if (tapFileBytes.Length < 20)
             {
@@ -77,17 +75,15 @@ namespace TapeTools.TapConvert.Amiga.Serialisation
 
             var version = (int)tapFileBytes[12];
 
-            if (tapFileBytes[12] != 1)
+            if (version != 1)
             {
                 throw new Exception($"Unsupported version: {version}");
             }
 
             if (BitConverter.ToUInt32(tapFileBytes, 16) != tapFileBytes.Length - 20)
             {
-                throw new Exception($"File length mis-match");
+                throw new Exception("File length mis-match");
             }
-
-            return version;
         }
     }
 }

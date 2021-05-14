@@ -1,11 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <OutputPath>obj/intermediate</OutputPath>
     <PublishDir>bin</PublishDir>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <PublishTrimmed>true</PublishTrimmed>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
     <RunCommand>$(MSBuildProjectDirectory)\$(PublishDir)\$(AssemblyName).exe</RunCommand>
   </PropertyGroup>
   <Target Name="BinPublish" DependsOnTargets="Publish" AfterTargets="Build" />

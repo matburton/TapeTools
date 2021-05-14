@@ -39,14 +39,14 @@ namespace TapeTools.TapConvert.Amiga.Serialisation
         private static uint ToColourCycles(TimeSpan pulseGap) =>
             Convert.ToUInt32(Math.Round(pulseGap.Ticks * 0.0709379));
 
-        private static IList<byte> GetBytes
-            (uint[] cycles, Func<uint, int?> getIndex)
+        private static IEnumerable<byte> GetBytes
+            (IReadOnlyList<uint> cycles, Func<uint, int?> getIndex)
         {
             var bytes = new List<byte>();
 
-            for (var index = 0; index < cycles.Length; index += 2)
+            for (var index = 0; index < cycles.Count; index += 2)
             {
-                var lastGap = index + 1 == cycles.Length;
+                var lastGap = index + 1 == cycles.Count;
                 
                 var currentIndex = getIndex(cycles[index]);
 
