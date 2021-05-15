@@ -26,22 +26,27 @@ namespace TapeTools.TapConvert.Amiga.Serialisation
 
         private static IEnumerable<int> ToSampleCountGaps(byte[] wavFileBytes)
         {
-            var isLow = BitConverter.ToInt16(wavFileBytes, 44) < 0;
+            bool IsLow(int i) => BitConverter.ToInt16(wavFileBytes, i) < 0;
+
+            var wasLow = IsLow(44);
 
             var count = 1;
 
             for (var index = 46; index < wavFileBytes.Length; index += 2, ++count)
             {
-                var nowLow = BitConverter.ToInt16(wavFileBytes, index) < 0;
+                var nowLow = IsLow(index);
 
-                if (nowLow == isLow) continue;
+                if (wasLow && !nowLow)
+                {
+                    yield return count;
 
-                yield return count;
-
-                count = 0;
+                    count = 0;
+                }
                 
-                isLow = nowLow;
+                wasLow = nowLow;
             }
+
+            yield return count;
         }
 
         private static void VerifyCompatibility(byte[] wavFileBytes)
