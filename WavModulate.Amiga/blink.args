@@ -1,0 +1,14 @@
+Draco/drlib/drstart0.o
+t:WavModulate/Main.r
+t:WavModulate/Modulating.r
+t:WavModulate/File.r
+t:WavModulate/Parsing.r
+t:WavModulate/Timing.r
+
+lib
+Draco/drlib/exec.lib
+Draco/drlib/dos.lib
+Draco/drlib/drio.lib
+Draco/drlib/draco.lib
+
+to ram:WavModulate smallcode
