@@ -15,8 +15,8 @@ namespace TapeTools.WavConvert.Amiga
             {
                 if (arguments.Length < 1)
                 {
-                    Console.WriteLine("\nArguments are '.tap' file paths");
-                    Console.WriteLine("'.amiga.bin' files will be written to"
+                    Console.WriteLine("\nArguments are '.wav' file paths");
+                    Console.WriteLine("'.wav.amiga' files will be written to"
                                       + " current directory with same file names");
                 }
 
@@ -57,8 +57,15 @@ namespace TapeTools.WavConvert.Amiga
 
             var totalRunTime = pulseGaps.Aggregate((g, a) => g + a);
 
+            var maxFrequency = TimeSpan.TicksPerSecond
+                             / pulseGaps.Where(g => g > TimeSpan.Zero)
+                                        .OrderBy(o => o)
+                                        .First()
+                                        .Ticks;
+
             Console.WriteLine($"Total pulse gaps:     {pulseGaps.Count:n0}");
             Console.WriteLine($"Non-stop run time:    {totalRunTime}");
+            Console.WriteLine($"Maximum frequency:    {maxFrequency:n0} Hz");
             Console.WriteLine($"Original file bytes:  {tapFileBytes.Length:n0}");
             Console.WriteLine($"Converted file bytes: {amigaFileBytes.Length:n0}");
 

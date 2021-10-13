@@ -19,12 +19,16 @@ namespace TapeTools.WavConvert.Amiga.Serialisation
 
             startLow = BitConverter.ToInt16(wavFileBytes, 44) < 0;
 
-            return ToSampleCountGaps(wavFileBytes)
-                  .Select(c => c * 226.7573696145125)
-                  .Select(t => Math.Round(t))
-                  .Select(Convert.ToInt64)
-                  .Select(TimeSpan.FromTicks)
-                  .ToArray();
+            var pulseGaps = ToSampleCountGaps(wavFileBytes)
+                           .Select(c => c * 226.7573696145125)
+                           .Select(t => Math.Round(t))
+                           .Select(Convert.ToInt64)
+                           .Select(TimeSpan.FromTicks)
+                           .ToArray();
+
+            pulseGaps[0] = TimeSpan.Zero;
+
+            return pulseGaps;
         }
 
         /// <remarks>For debugging, WAV to WAV round-trip-ish</remarks>
@@ -71,7 +75,7 @@ namespace TapeTools.WavConvert.Amiga.Serialisation
 
         private static byte[] ToSamples(int sampleCount, bool low)
         {
-            short value = low ? -23198 : 23198;
+            var value = low ? (short)-23198 : (short)23198;
 
             return Enumerable.Repeat(value, sampleCount)
                              .SelectMany(BitConverter.GetBytes)
