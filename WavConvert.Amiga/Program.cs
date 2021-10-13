@@ -58,10 +58,7 @@ namespace TapeTools.WavConvert.Amiga
             var totalRunTime = pulseGaps.Aggregate((g, a) => g + a);
 
             var maxFrequency = TimeSpan.TicksPerSecond
-                             / pulseGaps.Where(g => g > TimeSpan.Zero)
-                                        .OrderBy(o => o)
-                                        .First()
-                                        .Ticks;
+                             / pulseGaps.OrderBy(o => o).First().Ticks;
 
             Console.WriteLine($"Total pulse gaps:     {pulseGaps.Count:n0}");
             Console.WriteLine($"Non-stop run time:    {totalRunTime}");

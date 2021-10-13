@@ -17,18 +17,15 @@ namespace TapeTools.WavConvert.Amiga.Serialisation
 
             VerifyCompatibility(wavFileBytes);
 
-            startLow = BitConverter.ToInt16(wavFileBytes, 44) < 0;
+            startLow = BitConverter.ToInt16(wavFileBytes, 44) >= 0;
 
-            var pulseGaps = ToSampleCountGaps(wavFileBytes)
-                           .Select(c => c * 226.7573696145125)
-                           .Select(t => Math.Round(t))
-                           .Select(Convert.ToInt64)
-                           .Select(TimeSpan.FromTicks)
-                           .ToArray();
-
-            pulseGaps[0] = TimeSpan.Zero;
-
-            return pulseGaps;
+            return ToSampleCountGaps(wavFileBytes)
+                  .Skip(1)
+                  .Select(c => c * 226.7573696145125)
+                  .Select(t => Math.Round(t))
+                  .Select(Convert.ToInt64)
+                  .Select(TimeSpan.FromTicks)
+                  .ToArray();
         }
 
         /// <remarks>For debugging, WAV to WAV round-trip-ish</remarks>
