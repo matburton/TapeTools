@@ -5,6 +5,8 @@ using System.Linq;
 
 using TapeTools.WavConvert.Amiga.Serialisation;
 
+using static System.Environment;
+
 namespace TapeTools.WavConvert.Amiga
 {
     public static class Program
@@ -51,6 +53,17 @@ namespace TapeTools.WavConvert.Amiga
 
             var pulseGaps = wavSerialiser.ToPulseGaps(tapFileBytes,
                                                       out var startLow);
+
+            if (   GetEnvironmentVariable("TAPE_PULSE_GAP_MULTIPLIER") is {} s
+                && double.TryParse(s, out var pulseGapMultiplier))
+            {
+                Console.WriteLine($"Pulse gap multiplier: {pulseGapMultiplier}\n");
+
+                pulseGaps = pulseGaps.Select(g => g.Ticks * pulseGapMultiplier)
+                                     .Select(t => Math.Round(t))
+                                     .Select(t => new TimeSpan((long)t))
+                                     .ToArray();
+            }
 
             var amigaFileBytes = new AmigaSerialiser().ToBytes(pulseGaps,
                                                                startLow);
