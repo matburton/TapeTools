@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <OutputPath>obj/intermediate</OutputPath>
     <PublishDir>bin</PublishDir>
@@ -8,7 +8,7 @@
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>
     <PublishTrimmed>true</PublishTrimmed>
-    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <RunCommand>$(MSBuildProjectDirectory)\$(PublishDir)\$(AssemblyName).exe</RunCommand>
   </PropertyGroup>
   <Target Name="BinPublish" DependsOnTargets="Publish" AfterTargets="Build" />
